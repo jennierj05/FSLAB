@@ -1,0 +1,60 @@
+<html>
+<head>
+  <title>Feedback Survey</title>
+  <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+
+<div id="coaching-session-client-feedback-survey">
+  <h2>Feedback Survey</h2>
+  <br>
+  <form id="feedback-form">
+    <label for="date">Date:</label>
+    <input type="date" id="date" name="date" required>
+    <br><br>
+    <label for="coach">Name of The Participent:</label>
+    <input type="text" id="coach" name="coach" required>
+    <br><br>
+    <label for="feedback-from">Feedback Area:</label>
+    <input type="text" id="feedback-from" name="feedback-from" required>
+    <br><br>
+    <h3>Number of Coreography</h3>
+    <select id="umas-coach-name-use" name="umas-coach-name-use">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <br><br>
+    <h3>Structure of the Session (check all that apply)</h3>
+    <input type="checkbox" id="rapport" name="structure[]" value="Rapport">
+    <label for="rapport">Rapport</label><br>
+    <input type="checkbox" id="imantion" name="structure[]" value="Imantion">
+    <label for="imantion">Imantion</label><br>
+    <br>
+    <h3>What made you to behave outstanding?</h3>
+    <textarea id="heard-understood" name="heard-understood" rows="5" cols="33" required></textarea>
+    <br><br>
+    <h3>What Challenged you faced during the role play?</h3>
+    <textarea id="challenged" name="challenged" rows="5" cols="33" required></textarea>
+    <br><br>
+    <h3>What did you like most about the role play?</h3>
+    <textarea id="liked-most" name="liked-most" rows="5" cols="33" required></textarea>
+    <br><br>
+    <h3>What's your Action Plan based on role play?</h3>
+    <textarea id="action-plan" name="action-plan" rows="5" cols="33" required></textarea>
+    <br><br>
+    <h3>Please provide any additional feedback...</h3>
+    <textarea id="additional-feedback" name="additional-feedback" rows="5" cols="73"></textarea>
+    <br><br>
+    <input type="submit" value="Submit Feedback">
+  </form>
+  <div id="message"></div>
+</div>
+
+<script src="form.js"></script>
+</body>
+</html>
+

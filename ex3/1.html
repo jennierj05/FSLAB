@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex Color Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            color: blueviolet;
+        }
+    </style>
+</head>
+<body style="background-color: bisque;">
+
+    <table id="colorTable">
+        <thead>
+            <tr>
+                <th>Hex Color Code 1</th>
+                <th>Hex Color Code 2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td data-color="#FF0000">FF0000</td>
+        
+        
+                <td data-color="#00FF00">00FF00</td>
+            </tr>
+            <tr>
+                <td data-color="#0000FF">0000FF</td>
+            
+            
+                <td data-color="#FFFF00">FFFF00</td>
+            </tr>
+            <tr>
+                <td data-color="#00FFFF">00FFFF</td>
+            
+           
+                <td data-color="#FF00FF">FF00FF</td>
+            </tr>
+            <tr>
+                <td data-color="#C0C0C0">C0C0C0</td>
+           
+                <td data-color="#808080">808080</td>
+            </tr>
+            <tr>
+                <td data-color="#800000">800000</td>
+            
+                <td data-color="#808000">808000</td>
+            </tr>
+            <tr>
+                <td data-color="#008000">008000</td>
+                <td data-color="#003820">003820</td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var table = document.getElementById("colorTable");
+        var cells = table.getElementsByTagName("td");
+
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].addEventListener("mouseover", function() {
+                var color = this.getAttribute("data-color");
+                this.style.backgroundColor = color;
+            });
+
+            cells[i].addEventListener("mouseout", function() {
+                this.style.backgroundColor = "";
+                this.style.color = "";
+            });
+        }
+
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>String Comparison</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    h1 {
+        color: #333;
+    }
+
+    #result {
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h1>String Comparison</h1>
+
+<div>
+    <label for="string1">Enter String 1:</label>
+    <input type="text" id="string1" placeholder="Enter string 1">
+</div>
+
+<div>
+    <label for="string2">Enter String 2:</label>
+    <input type="text" id="string2" placeholder="Enter string 2">
+</div>
+
+<button onclick="compareStrings()">Compare Strings</button>
+
+<div id="result"></div>
+
+<script>
+    function compareStrings() {
+        var string1 = document.getElementById('string1').value;
+        var string2 = document.getElementById('string2').value;
+
+        var result = document.getElementById('result');
+        if (string1.length === string2.length) {
+            result.textContent = 'Result: true';
+        } else {
+            result.textContent = 'Result: false';
+        }
+    }
+</script>
+
+</body>
+</html>

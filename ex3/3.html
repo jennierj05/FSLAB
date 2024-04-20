@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <title>
+        Game of 15
+    </title>
+    <style>
+        .cell {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+            text-align: center;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Game of 15</h2>
+    <p>Click on a tile to move it to the empty slot.</p>
+    <div>
+        <table id="board" style="border:1px solid black"></table>
+    </div>
+    <script>
+
+        var size = 4;
+
+        var cells = createBoard();
+
+        function shuffleArray(array) {
+            for (var i = array.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                const temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+            return array;
+        }
+
+        function makeMove(event) {
+            if (checkWin()) {
+                alert("Congratulations! You won!");
+                return;
+            }
+
+        }
+
+        function findEmptyCell() {
+            for (var i = 0; i < cells.length; i++) {
+                for (var j = 0; j < cells[i].length; j++) {
+                    if (cells[i][j].textContent === "") {
+                        return cells[i][j];
+                    }
+                }
+            }
+        }
+
+        function isAdjacent(cell1, cell2) {
+            var row1 = cell1.parentNode.rowIndex;
+            var col1 = cell1.cellIndex;
+            var row2 = cell2.parentNode.rowIndex;
+            var col2 = cell2.cellIndex;
+
+            return Math.abs(row1 - row2) + Math.abs(col1 - col2) === 1;
+        }
+
+        function checkWin() {
+            var currentNumber = 1;
+            for (var i = 0; i < size; i++) {
+                for (var j = 0; j < size; j++) {
+                    if (cells[i][j].textContent !== "") {
+                        if (parseInt(cells[i][j].textContent) !== currentNumber) {
+                            return false;
+                        }
+                        currentNumber++;
+                    }
+                }
+            }
+            return true;
+        }
+
+        function createBoard() {
+            var table = document.getElementById("board");
+            var cells = [];
+            var index = 0;
+            var numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, ""];
+            numbers = shuffleArray(numbers);
+            for (var y = 0; y < size; y++) {
+                var tr = document.createElement("tr");
+                table.appendChild(tr);
+                var rowCells = [];
+                cells.push(rowCells);
+                for (var x = 0; x < 4; x++) {
+                    var td = document.createElement("td");
+                    td.setAttribute("class", "cell");
+                    td.setAttribute("onclick", "makeMove(event)");
+                    td.textContent = numbers[index];
+                    tr.appendChild(td);
+                    rowCells.push(td);
+                    index++;
+                }
+            }
+            return cells;
+        }
+
+
+    </script>
+</body>
+
+</html>

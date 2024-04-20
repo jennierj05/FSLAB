@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Survey</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+   /* CSS styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #af4ca0; /* Updated background color */
+  padding: 20px; /* Added padding */
+  border-radius: 8px; /* Added border-radius */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added box-shadow */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 1px;
+  padding: 0%;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#content {
+  margin-top: 20px;
+}
+
+#content div {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#content div p {
+  margin: 5px 0;
+}
+
+
+  </style>
+</head>
+<body>
+
+<!-- Survey Form -->
+<form id="surveyForm">
+    <label for="name">Owner Name</label>
+    <input type="text" id="name" name="owner" required>
+
+    <label for="pet">What type of pet do you have?</label>
+    <select id="pet" name="type" required>
+      <option value="">Select One</option>
+      <option value="dog">Dog</option>
+      <option value="cat">Cat</option>
+      <option value="bird">Bird</option>
+      <option value="hamster">Hamster</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="breed">What is your pet's breed?</label>
+    <input type="radio" id="French Bulldog" name="breed" value="French Bulldog">
+    <label for="French Bulldog">French Bulldog</label><br>
+    <input type="radio" id="Alaskan Malamute" name="breed" value="Alaskan Malamute">
+    <label for="Alaskan Malamute">CAlaskan Malamute</label><br>
+    <input type="radio" id="Airedale Terrier" name="breed" value="Airedale Terrier">
+    <label for="Airedale Terrier">Airedale Terrier</label>
+
+
+
+    <label for="age">How old is your pet?</label>
+    <input type="number" id="age" name="age" min="0" step="1" required>
+
+    <label for="weight">Pet Weight (in kg)</label>
+    <input type="number" id="weight" name="weight" min="0" step="1" required>
+
+    <label for="color">What is the color of your pet?</label>
+    <input type="text" id="color" name="color" required>
+
+    <label for="medicalHistory">Medical History</label>
+    <textarea id="medicalHistory" name="medicalHistory"></textarea>
+
+    <label for="vaccinations">Vaccinations</label>
+    <input type="checkbox" id="ZyCov-D " name="vaccinations" value="ZyCov-D ">
+    <label for="ZyCov-D">ZyCov-D </label><br>
+    <input type="checkbox" id="Shingles" name="vaccinations" value="Shingles">
+    <label for="Shingles"> Shingles</label><br>
+    <input type="checkbox" id="Hepatitis B" name="vaccinations" value="Hepatitis B">
+    <label for="Hepatitis B"> Hepatitis B</label><br><br>
+
+    <label for="lastVetVisit">Last Vet Visit</label>
+    <input type="date" id="lastVetVisit" name="lastVetVisit">
+
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Button to retrieve survey results -->
+<button onclick="getDetails()">GET DATA</button>
+
+<!-- Container to display survey results -->
+<div id="content"></div>
+
+<!-- JavaScript code -->
+<script>
+document.getElementById("surveyForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+
+  // Get form data
+  const formData = new FormData(event.target);
+  const surveyData = {};
+  formData.forEach((value, key) => {
+    surveyData[key] = value;
+  });
+  console.log(surveyData);
+
+  // Send data to server using Axios
+  axios.post('http://localhost:3000/survey', surveyData)
+    .then(response => {
+      alert('Survey submitted successfully!');
+      // Log server response (e.g., overall survey results)
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again later.');
+    });
+});
+
+function getDetails(){
+  axios.get('http://localhost:3000/survey/results')
+    .then(response => {
+      const content = document.getElementById("content");
+      const listObjects = response.data;
+      listObjects.forEach(data => {
+        const div = document.createElement("div");
+        const owner = document.createElement("p");
+        owner.textContent = "Owner Name: " + data.owner;
+        div.appendChild(owner);
+
+        const type = document.createElement("p");
+        type.textContent = "Pet Type: " + data.type;
+        div.appendChild(type);
+
+        const breed = document.createElement("p");
+        breed.textContent = "Breed: " + data.breed;
+        div.appendChild(breed);
+
+        const age = document.createElement("p");
+        age.textContent = "Pet Age: " + data.age;
+        div.appendChild(age);
+
+        const trained = document.createElement("p");
+        trained.textContent = "Pet Weight: " + data.weight;
+        div.appendChild(trained);
+
+        const color = document.createElement("p");
+        color.textContent = "Pet Color: " + data.color;
+        div.appendChild(color);
+
+        const cageSharing = document.createElement("p");
+        cageSharing.textContent = "Medical Histroy: " + data.medicalHistory;
+        div.appendChild(cageSharing);
+
+        const foodType = document.createElement("p");
+        foodType.textContent = "Vaccinations: " + data.vaccinations;
+        div.appendChild(foodType);
+
+
+        const last = document.createElement("p");
+        foodType.textContent = "lastVetVisit: " + data.lastVetVisit;
+        div.appendChild(foodType);
+
+        content.appendChild(div);
+      });
+    })
+    .catch(error => {
+      console.error('GET Error:', error.message);
+    });
+}
+</script>
+
+</body>
+</html>

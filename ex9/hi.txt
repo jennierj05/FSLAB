@@ -1,0 +1,254 @@
+
+import * as readlineSync from 'readline-sync';
+
+interface Book {
+  title: string;
+  author: string;
+  publisher: string;
+}
+
+function promptUserForBookData(): Promise<Book> {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    rl.question('Enter title: ', (title) => {
+      rl.question('Enter author: ', (author) => {
+        rl.question('Enter publisher: ', (publisher) => {
+          rl.close();
+          resolve({ title, author, publisher });
+        });
+      });
+    });
+  });
+}
+
+async function main() {
+  const books: Book[] = [];
+
+  // Get book details from user
+  console.log("Enter details for five books:");
+  for (let i = 0; i < 3; i++) {
+    console.log(`Book ${i + 1}:`);
+    const book = await promptUserForBookData();
+    books.push(book);
+  }
+
+  // Sort books by author name in ascending order
+  books.sort((a, b) => a.author.localeCompare(b.author));
+
+  // Display book details sorted by author name
+  console.log("Books sorted by author name:");
+  books.forEach((book, index) => {
+    console.log(`${index + 1}. Title: ${book.title}, Author: ${book.author}, Publisher: ${book.publisher}`);
+  });
+}
+
+main();
+
+
+output:-
+
+Enter details for five books:
+Book 1:
+Enter title: xyz
+Enter author: abc
+Enter publisher: pearson
+Book 2:
+Enter title: rst
+Enter author: por
+Enter publisher: tmh
+Book 3:
+Enter title: sre
+Enter author: ramya
+Enter publisher: pearson
+Books sorted by author name:
+1. Title: xyz, Author: abc, Publisher: pearson
+2. Title: rst, Author: por, Publisher: tmh
+3. Title: sre, Author: ramya, Publisher: pearson
+
+stack.ts
+
+import * as readline from 'readline';
+
+class Stack<T> {
+  private items: T[] = [];
+
+  push(item: T): void {
+    this.items.push(item);
+  }
+
+  pop(): T | undefined {
+    return this.items.pop();
+  }
+
+  isEmpty(): boolean {
+    return this.items.length === 0;
+  }
+}
+
+function main() {
+  const stack = new Stack<number>(); // Change number to the desired type
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  function promptUser() {
+    rl.question("\nStack Operations:\n1. Push\n2. Pop\n3. Check if the stack is empty\n4. Exit\nEnter your choice: ", (choice) => {
+      switch (choice) {
+        case "1":
+          rl.question("Enter the item to push: ", (item) => {
+            stack.push(parseFloat(item));
+            console.log(`Pushed ${item} onto the stack.`);
+            promptUser();
+          });
+          break;
+        case "2":
+          const poppedItem = stack.pop();
+          if (poppedItem !== undefined) {
+            console.log(`Popped ${poppedItem} from the stack.`);
+          } else {
+            console.log("Stack is empty. Nothing to pop.");
+          }
+          promptUser();
+          break;
+        case "3":
+          if (stack.isEmpty()) {
+            console.log("Stack is empty.");
+          } else {
+            console.log("Stack is not empty.");
+          }
+          promptUser();
+          break;
+        case "4":
+          console.log("Exiting program.");
+          rl.close();
+          break;
+        default:
+          console.log("Invalid choice. Please enter a valid option.");
+          promptUser();
+      }
+    });
+  }
+
+  promptUser();
+}
+
+main();
+
+output:
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 1
+Enter the item to push: 34
+Pushed 34 onto the stack.
+
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 1
+Enter the item to push: 56
+Pushed 56 onto the stack.
+
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 2
+Popped 56 from the stack.
+
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 2
+Popped 34 from the stack.
+
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 3
+Stack is empty.
+
+Stack Operations:
+1. Push
+2. Pop
+3. Check if the stack is empty
+4. Exit
+Enter your choice: 4
+Exiting program.
+
+employee.ts
+
+class Employee {
+    name: string;
+    hoursWorked: number;
+    hourlyRate: number;
+
+    constructor(name: string, hoursWorked: number, hourlyRate: number) {
+      this.name = name;
+      this.hoursWorked = hoursWorked;
+      this.hourlyRate = hourlyRate;
+    }
+
+    calculatePay(): number {
+      return this.hoursWorked * this.hourlyRate;
+    }
+  }
+
+  function promptUserForEmployeeData(): Promise<Employee> {
+    return new Promise((resolve) => {
+      const readline = require('readline');
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+      });
+
+      rl.question('Enter employee name: ', (name) => {
+        rl.question('Enter hours worked: ', (hoursWorkedStr) => {
+          const hoursWorked = parseFloat(hoursWorkedStr);
+          rl.question('Enter hourly rate: ', (hourlyRateStr) => {
+            const hourlyRate = parseFloat(hourlyRateStr);
+            rl.close();
+            resolve(new Employee(name, hoursWorked, hourlyRate));
+          });
+        });
+      });
+    });
+  }
+
+  async function main() {
+    const employee = await promptUserForEmployeeData();
+    console.log(`Employee: ${employee.name}`);
+    console.log(`Hours worked: ${employee.hoursWorked}`);
+    console.log(`Hourly rate: $${employee.hourlyRate}`);
+    console.log(`Weekly pay: $${employee.calculatePay()}`);
+  }
+
+  main();
+
+  output:
+
+Enter employee name: ramya
+Enter hours worked: 9
+Enter hourly rate: 300
+Employee: ramya
+Hours worked: 9
+Hourly rate: $300
+Weekly pay: $2700
+
+
+
